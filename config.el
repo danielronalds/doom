@@ -18,10 +18,7 @@
       explicit-shell-file-name shell-file-name)
 (setenv "SHELL" shell-file-name)
 
-;; Doom lazy-loads Babel backends by source block language.  Map Zsh blocks to
-;; ob-shell, which provides `org-babel-execute:zsh'.
-(after! org
-  (add-to-list '+org-babel-mode-alist '(zsh . shell)))
+
 
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
@@ -59,7 +56,7 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
 
-(setq projectile-project-search-path '(("~/.config") ("~/Projects/" . 2)))
+(setq projectile-project-search-path '(("~/") ("~/.config") ("~/Projects/" . 2)))
 
 ;; Open the current buffer's directory in Dired, reusing this window.
 (map! :n "-" #'dired-jump)
@@ -79,10 +76,6 @@
 (map! :leader
       :desc "Open Dired vertical split" "s v" #'danielr/dired-vsplit
       :desc "Open Dired horizontal split" "s h" #'danielr/dired-hsplit)
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
 
 ;; `templ' has no dedicated Doom module. Use its tree-sitter mode and language
 ;; server alongside the Go module.
@@ -129,34 +122,22 @@
          :desc "Next Harpoon file" "n" #'harpoon-go-to-next
          :desc "Previous Harpoon file" "p" #'harpoon-go-to-prev)))
 
+;;  _____                 ___  ___          _
+;; |  _  |                |  \/  |         | |
+;; | | | |_ __ __ _ ______| .  . | ___   __| | ___
+;; | | | | '__/ _` |______| |\/| |/ _ \ / _` |/ _ \
+;; \ \_/ / | | (_| |      | |  | | (_) | (_| |  __/
+;;  \___/|_|  \__, |      \_|  |_/\___/ \__,_|\___|
+;;             __/ |
+;;            |___/
 
-;; Whenever you reconfigure a package, make sure to wrap your config in an
-;; `with-eval-after-load' block, otherwise Doom's defaults may override your
-;; settings. E.g.
-;;
-;;   (with-eval-after-load 'PACKAGE
-;;     (setq x y))
-;;
-;; The exceptions to this rule:
-;;
-;;   - Setting file/directory variables (like `org-directory')
-;;   - Setting variables which explicitly tell you to set them before their
-;;     package is loaded (see 'C-h v VARIABLE' to look them up).
-;;   - Setting doom variables (which start with 'doom-' or '+').
-;;
-;; Here are some additional functions/macros that will help you configure Doom.
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
-;; etc).
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
+(setq org-directory "~/org/")
+
+(use-package! org-superstar
+  :after org
+  :hook (org-mode . org-superstar-mode))
+
+;; Doom lazy-loads Babel backends by source block language.  Map Zsh blocks to
+;; ob-shell, which provides `org-babel-execute:zsh'.
+(after! org
+  (add-to-list '+org-babel-mode-alist '(zsh . shell)))

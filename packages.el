@@ -52,6 +52,9 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
 
+;; Pretty heading bullets in Org buffers.
+(package! org-superstar)
+
 ;; Go templ components (there is no built-in Doom language module for templ).
 (package! templ-ts-mode)
 
