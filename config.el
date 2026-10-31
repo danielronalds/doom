@@ -92,6 +92,12 @@
 
 (setq scroll-margin 10)
 
+;; Send the current file (and, when active, its line range) to an AI agent
+;; already running in a Ghostel or other Emacs terminal buffer.
+(load! "reference")
+(map! :leader
+      :desc "Send file reference to AI agent" "c c" #'reference-send)
+
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `with-eval-after-load' block, otherwise Doom's defaults may override your
