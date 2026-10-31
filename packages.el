@@ -54,3 +54,6 @@
 
 ;; Go templ components (there is no built-in Doom language module for templ).
 (package! templ-ts-mode)
+
+;; Project- and branch-specific quick file navigation.
+(package! harpoon)

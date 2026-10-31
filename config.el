@@ -98,6 +98,37 @@
 (map! :leader
       :desc "Send file reference to AI agent" "c c" #'reference-send)
 
+;; Keep a short list of important files for each Projectile project and Git
+;; branch. Direct slots mirror the bindings in the Neovim configuration.
+(use-package! harpoon
+  :commands (harpoon-add-file
+             harpoon-clear
+             harpoon-go-to-1
+             harpoon-go-to-2
+             harpoon-go-to-3
+             harpoon-go-to-4
+             harpoon-go-to-5
+             harpoon-go-to-next
+             harpoon-go-to-prev
+             harpoon-quick-menu-hydra
+             harpoon-toggle-file)
+  :init
+  (setq harpoon-project-package 'projectile
+        harpoon-separate-by-branch t)
+  (map! :leader
+        :desc "Harpoon file 1" "1" #'harpoon-go-to-1
+        :desc "Harpoon file 2" "2" #'harpoon-go-to-2
+        :desc "Harpoon file 3" "3" #'harpoon-go-to-3
+        :desc "Harpoon file 4" "4" #'harpoon-go-to-4
+        :desc "Harpoon file 5" "5" #'harpoon-go-to-5
+        (:prefix ("j" . "jump")
+         :desc "Add file to Harpoon" "a" #'harpoon-add-file
+         :desc "Harpoon menu" "m" #'harpoon-quick-menu-hydra
+         :desc "Edit Harpoon list" "f" #'harpoon-toggle-file
+         :desc "Clear Harpoon list" "c" #'harpoon-clear
+         :desc "Next Harpoon file" "n" #'harpoon-go-to-next
+         :desc "Previous Harpoon file" "p" #'harpoon-go-to-prev)))
+
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `with-eval-after-load' block, otherwise Doom's defaults may override your
