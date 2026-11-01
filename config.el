@@ -141,3 +141,15 @@
 ;; ob-shell, which provides `org-babel-execute:zsh'.
 (after! org
   (add-to-list '+org-babel-mode-alist '(zsh . shell)))
+
+;; ______  _____ _____
+;; | ___ \/  ___/  ___|
+;; | |_/ /\ `--.\ `--.
+;; |    /  `--. \`--. \
+;; | |\ \ /\__/ /\__/ /
+;; \_| \_|\____/\____/
+
+(after! elfeed
+  (let ((private-feeds (expand-file-name "elfeed-private.el" doom-private-dir)))
+    (when (file-exists-p private-feeds)
+      (load private-feeds))))
