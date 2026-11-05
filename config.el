@@ -150,6 +150,6 @@
 ;; \_| \_|\____/\____/
 
 (after! elfeed
-  (let ((private-feeds (expand-file-name "elfeed-private.el" doom-private-dir)))
+  (let ((private-feeds (expand-file-name "elfeed-feeds.el" doom-private-dir)))
     (when (file-exists-p private-feeds)
       (load private-feeds))))
