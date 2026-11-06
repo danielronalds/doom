@@ -153,3 +153,5 @@
   (let ((private-feeds (expand-file-name "elfeed-feeds.el" doom-private-dir)))
     (when (file-exists-p private-feeds)
       (load private-feeds))))
+
+(load! "github-dashboard")
