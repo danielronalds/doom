@@ -1,0 +1,39 @@
+#+title: Agent Shell Readme
+* Agent Shell
+
+** Summary
+
+A simple module that wraps [[https://github.com/xenodium/agent-shell][agent-shell]] with some bindings and settings specific to this config
+
+** Setup
+
+In =init.el= the module can be included like so
+
+
+#+begin_src elisp
+:private
+(agent-shell +pi +claude)
+#+end_src
+
+Agent support is configured via flags on the module declaration
+
+| Option Flag | Description                 |
+|-------------+-----------------------------|
+| =+pi=       | Enables the Pi coding agent |
+| =+claude=   | Enables the Claude coding agent |
+
+*** Backend Support
+
+=agent-shell= makes use of the [[https://agentclientprotocol.com/get-started/introduction][ACP protocol]] to communicate with the harnesses/agents. The required ones can be installed below
+
+**** Pi
+
+#+begin_src bash
+npm install -g pi-acp
+#+end_src
+
+**** Claude
+
+#+begin_src bash
+npm install -g @agentclientprotocol/claude-agent-acp
+#+end_src
