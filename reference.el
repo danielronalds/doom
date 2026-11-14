@@ -16,6 +16,11 @@
   :type '(repeat string)
   :group 'reference)
 
+(defcustom reference-switch-to-target t
+  "When non-nil, show and select the agent's terminal after sending a reference."
+  :type 'boolean
+  :group 'reference)
+
 (defun reference--terminal-kind ()
   "Return the terminal kind of the current buffer, or nil."
   (cond ((derived-mode-p 'ghostel-mode) 'ghostel)
@@ -204,7 +209,9 @@
 
 With an active region, include its inclusive line range.  When several agents
 are running, prompt for the destination; when exactly one is running, use it
-directly.  The reference is pasted but not submitted."
+directly.  The reference is pasted but not submitted.  When
+`reference-switch-to-target' is non-nil, the target terminal is shown and
+selected afterwards."
   (interactive)
   (let* ((text (reference--text))
          (agents (reference--agents)))
@@ -213,6 +220,8 @@ directly.  The reference is pasted but not submitted."
     (let* ((agent (reference--choose-agent agents))
            (buffer (plist-get agent :buffer)))
       (reference--send buffer text)
+      (when reference-switch-to-target
+        (pop-to-buffer buffer))
       (message "Sent %s to %s in %s"
                text (plist-get agent :agent) (buffer-name buffer)))))
 

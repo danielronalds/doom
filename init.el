@@ -86,7 +86,7 @@
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
-       ;;(spell +flyspell) ; tasing you for misspelling mispelling
+       (spell +flyspell) ; tasing you for misspelling mispelling
        ;;grammar           ; tasing grammar mistake every you make
 
        :tools
@@ -195,6 +195,9 @@
        ;;everywhere        ; *leave* Emacs!? You must be joking
        ;;irc               ; how neckbeards socialize
        rss        ; emacs as an RSS reader
+
+       :private
+       (agent-shell +pi +claude) ; ACP agents in an Emacs shell
 
        :config
        ;;literate

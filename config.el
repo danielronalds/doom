@@ -1,7 +1,27 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
+;;   ___  ____________ _____  ___  ______  ___   _   _ _____  _____
+;;  / _ \ | ___ \ ___ \  ___|/ _ \ | ___ \/ _ \ | \ | /  __ \|  ___|
+;; / /_\ \| |_/ / |_/ / |__ / /_\ \| |_/ / /_\ \|  \| | /  \/| |__
+;; |  _  ||  __/|  __/|  __||  _  ||    /|  _  || . ` | |    |  __|
+;; | | | || |   | |   | |___| | | || |\ \| | | || |\  | \__/\| |___
+;; \_| |_/\_|   \_|   \____/\_| |_/\_| \_\_| |_/\_| \_/\____/\____/
+
+;;(setq doom-theme 'doom-one)
+;;(setq doom-theme 'doom-tokyo-night)
+(setq doom-theme 'catppuccin)
+(setq catppuccin-flavor 'frappe)
+
+(setq display-line-numbers-type 'relative)
+
+(setq scroll-margin 10)
+
+;; ____________ _____ _____ ______  ___  ___  ______  ________ _   _ _____
+;; | ___ \ ___ \  _  |  __ \| ___ \/ _ \ |  \/  ||  \/  |_   _| \ | |  __ \
+;; | |_/ / |_/ / | | | |  \/| |_/ / /_\ \| .  . || .  . | | | |  \| | |  \/
+;; |  __/|    /| | | | | __ |    /|  _  || |\/| || |\/| | | | | . ` | | __
+;; | |   | |\ \\ \_/ / |_\ \| |\ \| | | || |  | || |  | |_| |_| |\  | |_\ \
+;; \_|   \_| \_|\___/ \____/\_| \_\_| |_/\_|  |_/\_|  |_/\___/\_| \_/\____/
 
 ;; Reuse the language servers installed by Neovim's Mason rather than installing
 ;; a second copy for Emacs. Prepending this directory makes its executables
@@ -13,48 +33,35 @@
                                             path-separator t))
       (setenv "PATH" (concat mason-bin path-separator (getenv "PATH"))))))
 
+(use-package! templ-ts-mode
+  :mode "\\.templ\\'"
+  :hook (templ-ts-mode . eglot-ensure))
+
 ;; Use Zsh for interactive and subprocess shells.
 (setq shell-file-name (executable-find "zsh")
       explicit-shell-file-name shell-file-name)
 (setenv "SHELL" shell-file-name)
 
+;;  _____ _____ _____
+;; |  __ \_   _|_   _|
+;; | |  \/ | |   | |
+;; | | __  | |   | |
+;; | |_\ \_| |_  | |
+;;  \____/\___/  \_/
 
+(load! "github-dashboard")
 
+(after! magit
+  (magit-add-section-hook 'magit-status-sections-hook
+                          #'magit-insert-worktrees
+                          nil t))
 
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets. It is optional.
-(setq user-full-name "Daniel Ronalds"
-      user-mail-address "nzdanron@gmail.com")
-
-;; Doom exposes five (optional) variables for controlling fonts in Doom:
-;;
-;; - `doom-font' -- the primary font to use
-;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
-;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;; - `doom-symbol-font' -- for symbols
-;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-;;
-;; See 'C-h v doom-font' for documentation and more examples of what they
-;; accept. For example:
-;;
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-;;
-;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
-;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
-;; refresh your font settings. If Emacs still can't find your font, it likely
-;; wasn't installed correctly. Font issues are rarely Doom issues!
-
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-;;(setq doom-theme 'doom-one)
-(setq doom-theme 'doom-tokyo-night)
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
+;;  _   _   ___  _   _ _____ _____   ___ _____ _____ _____ _   _
+;; | \ | | / _ \| | | |_   _|  __ \ / _ \_   _|_   _|  _  | \ | |
+;; |  \| |/ /_\ \ | | | | | | |  \// /_\ \| |   | | | | | |  \| |
+;; | . ` ||  _  | | | | | | | | __ |  _  || |   | | | | | | . ` |
+;; | |\  || | | \ \_/ /_| |_| |_\ \| | | || |  _| |_\ \_/ / |\  |
+;; \_| \_/\_| |_/\___/ \___/ \____/\_| |_/\_/  \___/ \___/\_| \_/
 
 (setq projectile-project-search-path '(("~/") ("~/.config") ("~/Projects/" . 2)))
 
@@ -77,22 +84,12 @@
       :desc "Open Dired vertical split" "s v" #'danielr/dired-vsplit
       :desc "Open Dired horizontal split" "s h" #'danielr/dired-hsplit)
 
-;; `templ' has no dedicated Doom module. Use its tree-sitter mode and language
-;; server alongside the Go module.
-(use-package! templ-ts-mode
-  :mode "\\.templ\\'"
-  :hook (templ-ts-mode . eglot-ensure))
-
-(setq scroll-margin 10)
-
 ;; Send the current file (and, when active, its line range) to an AI agent
 ;; already running in a Ghostel or other Emacs terminal buffer.
 (load! "reference")
 (map! :leader
       :desc "Send file reference to AI agent" "c c" #'reference-send)
 
-;; Keep a short list of important files for each Projectile project and Git
-;; branch. Direct slots mirror the bindings in the Neovim configuration.
 (use-package! harpoon
   :commands (harpoon-add-file
              harpoon-clear
@@ -154,4 +151,12 @@
     (when (file-exists-p private-feeds)
       (load private-feeds))))
 
-(load! "github-dashboard")
+;; ___  ________ _____ _____
+;; |  \/  |_   _/  ___/  __ \
+;; | .  . | | | \ `--.| /  \/
+;; | |\/| | | |  `--. \ |
+;; | |  | |_| |_/\__/ / \__/\
+;; \_|  |_/\___/\____/ \____/
+
+(setq user-full-name "Daniel Ronalds"
+      user-mail-address "nzdanron@gmail.com")

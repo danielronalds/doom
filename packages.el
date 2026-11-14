@@ -60,3 +60,7 @@
 
 ;; Project- and branch-specific quick file navigation.
 (package! harpoon)
+
+(package! catppuccin-theme)
+
+(package! just-mode)
